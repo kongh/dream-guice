@@ -12,6 +12,7 @@
         <module>guice-lifecycle</module>
         <module>guice-jpa</module>
         <module>guice-disconf</module>
+        <module>guice-demo</module>
     </modules>
 
     <properties>
@@ -90,6 +91,18 @@
             <dependency>
                 <groupId>com.coder.dream</groupId>
                 <artifactId>guice-lifecycle</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.coder.dream</groupId>
+                <artifactId>guice-disconf</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.coder.dream</groupId>
+                <artifactId>guice-jpa</artifactId>
                 <version>${project.parent.version}</version>
             </dependency>
 

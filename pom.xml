@@ -13,6 +13,7 @@
         <module>guice-jpa</module>
         <module>guice-disconf</module>
         <module>guice-demo</module>
+        <module>guice-lifecycle-ninja</module>
     </modules>
 
     <properties>

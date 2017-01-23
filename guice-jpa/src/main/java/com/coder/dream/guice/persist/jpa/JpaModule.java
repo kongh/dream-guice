@@ -13,19 +13,21 @@ import static com.google.inject.matcher.Matchers.any;
  */
 public class JpaModule extends AbstractModule {
 
+    private JpaConfig jpaConfig;
+
+    public JpaModule(JpaConfig jpaConfig) {
+        this.jpaConfig = jpaConfig;
+    }
+
     @Override
     protected void configure() {
-        String persistenceUnitName = "dev_unit";
-
-//        db.connection.url=jdbc:mysql://rdsb8hxo9g93fmcjeme2.mysql.rds.aliyuncs.com:3306/xiaoyage_bi?useUnicode=true&charset=utf8mb4&autoReconnect=true
-//        db.connection.username=xiaoyage_bi
-//        db.connection.password=xiaoyage123
+        String persistenceUnitName = jpaConfig == null ? null : jpaConfig.getPersistenceUnitName();
         if (persistenceUnitName != null) {
 
             // Get the connection credentials from application.conf
-            String connectionUrl = "jdbc:mysql://rdsb8hxo9g93fmcjeme2.mysql.rds.aliyuncs.com:3306/xiaoyage_bi?useUnicode=true&charset=utf8mb4&autoReconnect=true";
-            String connectionUsername = "xiaoyage_bi";
-            String connectionPassword = "xiaoyage123";
+            String connectionUrl = jpaConfig.getConnectionUrl();
+            String connectionUsername = jpaConfig.getConnectionUsername();
+            String connectionPassword = jpaConfig.getConnectionPassword();
 
             Properties jpaProperties = new Properties();
 
@@ -47,12 +49,6 @@ public class JpaModule extends AbstractModule {
             // connection.password is set. But this may be okay e.g. when using JDNI to
             // configure your datasources...
             install(new JpaPersistModule(persistenceUnitName).properties(jpaProperties));
-//            Properties jpaProperties2 = new Properties();
-//            jpaProperties2.put("hibernate.connection.url", "jdbc:mysql://localhost:3306/xiaoyage_dev9?useUnicode=true&charset=utf8mb4&autoReconnect=true");
-//            jpaProperties2.put("hibernate.connection.username", "root");
-//            jpaProperties2.put("hibernate.connection.password", "");
-//            EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(null, jpaProperties2);
-//            EntityManager entityManager = entityManagerFactory.createEntityManager();
 
             UnitOfWorkInterceptor unitOfWorkInterceptor = new UnitOfWorkInterceptor();
 

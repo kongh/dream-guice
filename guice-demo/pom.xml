@@ -17,6 +17,15 @@
             <artifactId>guice-disconf</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.coder.dream</groupId>
+            <artifactId>guice-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.25</version>
+        </dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>log4j-over-slf4j</artifactId>
             <version>1.7.13</version>

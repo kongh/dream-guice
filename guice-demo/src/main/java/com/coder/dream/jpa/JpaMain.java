@@ -18,11 +18,27 @@ import java.util.List;
 public class JpaMain {
 
     public static void main(String[] args) {
-        JpaConfig jpaConfig = new JpaConfig();
-        jpaConfig.setPersistenceUnitName("dev_unit");
-        jpaConfig.setConnectionUrl("jdbc:mysql://localhost:3306/Test_jpa?useUnicode=true&charset=utf8mb4&autoReconnect=true");
-        jpaConfig.setConnectionUsername("root");
-        jpaConfig.setConnectionPassword("");
+        JpaConfig jpaConfig = new JpaConfig(){
+            @Override
+            public String getPersistenceUnitName() {
+                return "dev_unit";
+            }
+
+            @Override
+            public String getConnectionUrl() {
+                return "jdbc:mysql://localhost:3306/Test_jpa?useUnicode=true&charset=utf8mb4&autoReconnect=true";
+            }
+
+            @Override
+            public String getConnectionUsername() {
+                return "root";
+            }
+
+            @Override
+            public String getConnectionPassword() {
+                return "";
+            }
+        };
 
         List<Module> modulesToload = new ArrayList<Module>();
         modulesToload.add(new JpaModule(jpaConfig));

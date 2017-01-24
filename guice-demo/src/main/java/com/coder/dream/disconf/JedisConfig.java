@@ -14,35 +14,54 @@ import com.google.inject.Singleton;
 @Singleton
 public class JedisConfig implements IDisconfUpdate{
 
-    // 代表连接地址
-    private String host;
+    private String persistenceUnitName;
+    private String connectionUrl;
+    private String connectionUsername;
+    private String connectionPassword;
 
-    // 代表连接port
-    private int port;
-
-    @DisconfFileItem(name = "redis.host", associateField = "host")
-    public String getHost() {
-        return host;
+    @DisconfFileItem(name = "ninja.jpa.persistence_unit_name", associateField = "persistenceUnitName")
+    public String getPersistenceUnitName() {
+        return persistenceUnitName;
     }
 
-    public void setHost(String host) {
-        this.host = host;
+    public void setPersistenceUnitName(String persistenceUnitName) {
+        this.persistenceUnitName = persistenceUnitName;
     }
 
-    @DisconfFileItem(name = "redis.port", associateField = "port")
-    public int getPort() {
-        return port;
+    @DisconfFileItem(name = "db.connection.url", associateField = "connectionUrl")
+    public String getConnectionUrl() {
+        return connectionUrl;
     }
 
-    public void setPort(int port) {
-        this.port = port;
+    public void setConnectionUrl(String connectionUrl) {
+        this.connectionUrl = connectionUrl;
+    }
+
+    @DisconfFileItem(name = "db.connection.username", associateField = "connectionUsername")
+    public String getConnectionUsername() {
+        return connectionUsername;
+    }
+
+    public void setConnectionUsername(String connectionUsername) {
+        this.connectionUsername = connectionUsername;
+    }
+
+    @DisconfFileItem(name = "db.connection.password", associateField = "connectionPassword")
+    public String getConnectionPassword() {
+        return connectionPassword;
+    }
+
+    public void setConnectionPassword(String connectionPassword) {
+        this.connectionPassword = connectionPassword;
     }
 
     @Override
     public String toString() {
         return "JedisConfig{" +
-                "host='" + host + '\'' +
-                ", port=" + port +
+                "persistenceUnitName='" + persistenceUnitName + '\'' +
+                ", connectionUrl='" + connectionUrl + '\'' +
+                ", connectionUsername='" + connectionUsername + '\'' +
+                ", connectionPassword='" + connectionPassword + '\'' +
                 '}';
     }
 

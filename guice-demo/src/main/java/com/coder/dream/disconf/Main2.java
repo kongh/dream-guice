@@ -1,27 +1,37 @@
 package com.coder.dream.disconf;
 
-import com.coder.dream.disconf.client.DisconfModule;
+import com.coder.dream.disconf.client.DisconfMgrFactory;
+import com.coder.dream.disconf.client.DisconfService;
 import com.coder.dream.guice.lifecycle.LifecycleService;
 import com.coder.dream.guice.lifecycle.LifecycleSupport;
+import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 /**
  * Created by konghang on 2017/1/22.
  */
-public class Main {
+public class Main2 {
 
     public static void main(String[] args) {
-        Properties properties = new Properties();
-        properties.put("disconf.scan.package", "com");
-
         List<Module> modulesToload = new ArrayList<Module>();
-        modulesToload.add(new DisconfModule(properties));
+        modulesToload.add(new AbstractModule() {
+            @Override
+            protected void configure() {
+                //启动disconf
+                DisconfMgrFactory factory = new DisconfMgrFactory("com");
+                DisconfService disconfService = factory;
+                factory.start();
+                factory.bindInstances(binder());
+
+                JedisConfig config = disconfService.findConfig(JedisConfig.class);
+                System.out.println(config);
+            }
+        });
         modulesToload.add(LifecycleSupport.getModule());
 
         Injector injector = Guice.createInjector(modulesToload);
@@ -36,6 +46,13 @@ public class Main {
             e.printStackTrace();
         }
 
-        lifecycleService.stop();
+        Runtime.getRuntime().addShutdownHook(new Thread(){
+            @Override
+            public void run() {
+                System.out.println(12);
+                lifecycleService.stop();
+            }
+        });
+
     }
 }
